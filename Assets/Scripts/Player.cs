@@ -28,17 +28,28 @@ public class Player : MonoBehaviour
         if (_currentPathIndex < _currentPath.Length)
         {
             var currentNode = _currentPath[_currentPathIndex];
-            
-            var maxDistance = _speed * Time.deltaTime;
-            var vectorToDestination = currentNode.Position - transform.position;
-            var moveDistance = Mathf.Min(vectorToDestination.magnitude, maxDistance);
 
-            var moveVector = vectorToDestination.normalized * moveDistance;
-            moveVector.y = 0f; // Ignore Y
-            transform.position += moveVector;
+            if (_currentPathIndex == 0)
+            {
+                transform.position = new Vector3(currentNode.Position.x, transform.position.y, currentNode.Position.z);
+                ++_currentPathIndex;
+            }
 
-            if (transform.position == currentNode.Position)
-                _currentPathIndex++;
+            else
+            {
+                var maxDistance = _speed * Time.deltaTime;
+                var vectorToDestination = currentNode.Position - transform.position;
+                var moveDistance = Mathf.Min(vectorToDestination.magnitude, maxDistance);
+
+                var moveVector = vectorToDestination.normalized * moveDistance;
+                moveVector.y = 0f; // Ignore Y
+                transform.position += moveVector;
+
+                float dist = Vector3.Distance(transform.position, currentNode.Position);
+
+                if (dist <= 1.1F)
+                    ++_currentPathIndex;
+            }
         }
     }
 }
