@@ -92,6 +92,8 @@ public class PathCalculator
     /// <returns></returns>
     private static List<NavGridPathNode> GetTraversableNodes(NavGrid grid, Vector2 min, Vector2 max, NavGridPathNode currentNode, NavGridPathNode targetNode)
     {
+        // This implimentation is based on a simple A* soultion
+
         // Add potential nodes for each node surrounding the current node
         List<NavGridPathNode> neighborNodes = new List<NavGridPathNode>()
         {
